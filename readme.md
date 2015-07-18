@@ -8,11 +8,10 @@
 
 ### Processes
 
-'''
+```
 # Set hostname
 sudo nano /etc/hosts
 # add '52.26.7.82 ec2-52-26-7-82.us-west-2.compute.amazonaws.com'
 sudo nano /etc/hostname
 # add 'ec2-52-26-7-82.us-west-2.compute.amazonaws.com'
-
-'''
+```
