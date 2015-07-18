@@ -73,12 +73,60 @@ source env/bin/activate
 
 #install python dependencies
 sudo pip install -r requirement.txt
+#download google oauth secret file from your google consle(https://console.developers.google.com/)
+#open google secret file and copy the content
+sudo nano client_secret.json
+#copy the content and save
+
 #check if work
 python run.py
 #Ctrl+c to exit
 #exit virtual enviroment
 deactivate
 
+#create virtualhost
+sudo nano /etc/apache2/sites-available/catalog.conf 
+#copy the content below and save
+#---------------------
+<VirtualHost *:80>
+                ServerName localhost
+                ServerAdmin edmond.liang.sf@gmail.com
+                WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+                <Directory /var/www/catalog/app/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                Alias /static /var/www/catalog/app/static
+                <Directory /var/www/catalog/app/static/>
+                        Order allow,deny
+                        Allow from all
+                </Directory>
+                ErrorLog ${APACHE_LOG_DIR}/error.log
+                LogLevel warn
+                CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+#---------------------
+
+#create wsgi file
+sudo nano /var/www/catalog/catalog.wsgi
+#copy the content below and save
+#---------------------
+#!/usr/bin/python
+import sys,os
+import logging
+logging.basicConfig(stream=sys.stderr)
+PROJECT_DIR="/var/www/catalog"
+sys.path.insert(0,PROJECT_DIR)
+from app import app as application
+#---------------------
+
+#activate catalog.conf
+sudo a2ensite catalog
+#reboot apache2
+sudo service apache2 restart
+
+#check error
+cat /var/log/apache2/error.log
 
 ```
 
