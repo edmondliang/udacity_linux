@@ -84,6 +84,6 @@ deactivate
 
 
 ### References
-https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
-http://www.enigmeta.com/2012/08/16/starting-flask/
-http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/
+- https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+- http://www.enigmeta.com/2012/08/16/starting-flask/
+- http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/
