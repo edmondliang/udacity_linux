@@ -6,12 +6,84 @@
 - Port:2200
 - Link:http://ec2-52-26-7-82.us-west-2.compute.amazonaws.com/
 
-### Processes
+### Procedure
+```
+#upgrade system
+sudo apt-get update
+sudo apt-get upgrade
+
+#create user grader with sudo premission
+sudo adduser grader
+sudo adduser grader sudo
+
+#make ssh key on client
+cd ~/.ssh
+ssh-keygen -t rsa -f grader_catalog
+pbcopy < grader_catalog.pub
+
+#swich to grader
+su grader
+#create .ssh dir
+mkdir .ssh
+sudo chmod 700 .ssh
+
+#make key file
+nano .ssh/authorized_keys
+#copy the key to authorized_key and save
+#logout grader
+exit
+
+#change ssh port 22 to 2200
+sudo nano /etc/ssh/sshd_config
+#find "Port 22" and change to "Port 2200"
+#restart ssh server
+sudo service ssh restart
+#logout server
+logout
+
+#login to server
+ssh -i ~/.ssh/grader_catalog grader@52.26.7.82 -p 2200
+
+#setup firewall
+sudo ufw allow 80
+sudo ufw allow 2200
+sudo ufw allow 123
+sudo ufw enable
+
+#check timezone
+date
+# timezone is already set to UTC - do nothing
+
+#install neccessary libraries
+sudo apt-get install apache2
+sudo apt-get install libapache2-mod-wsgi python-dev
+sudo a2enmod wsgi 
+sudo apt-get install python-pip 
+sudo pip install virtualenv
+
+#clone source code from github
+cd /var/www
+sudo git clone https://github.com/edmondliang/udacity_catalog.git
+sudo mv udacity_catalog catalog
+
+#create python virtual enviroment
+cd catalog
+sudo virtualenv env
+source env/bin/activate
+
+#install python dependencies
+sudo pip install -r requirement.txt
+#check if work
+python run.py
+#Ctrl+c to exit
+#exit virtual enviroment
+deactivate
+
 
 ```
-# Set hostname
-sudo nano /etc/hosts
-# add '52.26.7.82 ec2-52-26-7-82.us-west-2.compute.amazonaws.com'
-sudo nano /etc/hostname
-# add 'ec2-52-26-7-82.us-west-2.compute.amazonaws.com'
-```
+
+
+### References
+https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
+http://www.enigmeta.com/2012/08/16/starting-flask/
+http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/
