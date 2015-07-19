@@ -159,8 +159,9 @@ createdb -U catalog --locale=en_US.utf-8 -E utf-8 -O catalog app -T template0
 #change database connection
 nano /var/www/catalog/config.py
 #find "SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')"
-#set "SQLALCHEMY_DATABASE_URI = 'postgresql://catalog:(password)@localhost/catalog"
+#set "SQLALCHEMY_DATABASE_URI = 'postgresql://catalog:password@localhost/catalog"
 
+#Done!
 ```
 
 
