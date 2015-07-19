@@ -122,11 +122,44 @@ from app import app as application
 
 #activate catalog.conf
 sudo a2ensite catalog
+sudo a2dissite 000-default
 #reboot apache2
 sudo service apache2 restart
 
 #check error
 cat /var/log/apache2/error.log
+
+#install Postgresql
+sudo apt-get install postgresql postgresql-contrib python-psycopg2
+
+#change 
+sudo nano /etc/postgresql/9.3/main/pg_hba.conf 
+#check if any remote access(There is no remote access allowed by default)
+#---------------------
+local   all             postgres                                peer
+local   all             all                                     peer
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
+#---------------------
+
+#enter postgresql
+sudo su - postgres
+psql
+
+#create postgresql user
+createuser -P -S catalog --interactive
+#Enter password for new role: 
+#Enter it again: 
+#Shall the new role be allowed to create databases? (y/n) n
+#Shall the new role be allowed to create more new roles? (y/n) n
+
+#create postgresql database
+createdb -U catalog --locale=en_US.utf-8 -E utf-8 -O catalog app -T template0
+
+#change database connection
+nano /var/www/catalog/config.py
+#find "SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')"
+#set "SQLALCHEMY_DATABASE_URI = 'postgresql://catalog:(password)@localhost/catalog"
 
 ```
 
