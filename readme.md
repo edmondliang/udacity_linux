@@ -1,6 +1,18 @@
 # Configure a Flask Application on an Ubuntu server
   This is a part of course at Udacity
 
+# Software installation or configuration list
+- Ubuntu 14.04
+- Apache2
+- libapache2-mod-wsgi(wsgi)
+- Python 2.7.6
+- Flask 0.10.1
+- PostgreSQL 9.3
+- Pip
+- Virtualenv
+- ufw(firewall)
+- ssh
+
 ### How to access
 - IP:52.26.7.82
 - Port:2200
@@ -169,3 +181,5 @@ nano /var/www/catalog/config.py
 - https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps
 - http://www.enigmeta.com/2012/08/16/starting-flask/
 - http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/
+- https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-12-04
+- https://help.ubuntu.com/lts/serverguide/postgresql.html
